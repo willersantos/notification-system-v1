@@ -1,0 +1,61 @@
+version: "3.2"
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:14.4-alpine
+    volumes:
+      - postgres:/data/postgres
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "6543:5432"
+    env_file:
+      - .database.env
+    networks:
+      - notification-system
+    restart: unless-stopped
+  notification-producer:
+    container_name: notification-producer
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - .:/usr/app
+    env_file:
+      - .env.local
+    ports:
+      - 8000:8000
+    networks:
+      - notification-system
+    depends_on:
+      - postgres
+    restart: unless-stopped
+  notification-consumer:
+    container_name: notification-consumer
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - .:/usr/app
+    env_file:
+      - .env.local
+    ports:
+      - 8001:8001
+    networks:
+      - notification-system
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  notification-system:
+    driver: bridge
+
+volumes:
+  notification-producer:
+    driver: local
+  notification-consumer:
+    driver: local
+  postgres:
+    driver: local
