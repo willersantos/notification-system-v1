@@ -1,4 +1,4 @@
-import { NotificationStatusEnum } from "@/shared/enum/notificationStatus.enum copy";
+import { NotificationStatusEnum } from "@/shared/enum/notificationStatus.enum";
 import { Repository } from "typeorm";
 import { NotificationEntity } from "./entity/notifcation.entity";
 

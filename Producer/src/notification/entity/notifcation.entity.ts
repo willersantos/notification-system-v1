@@ -1,4 +1,4 @@
-import { NotificationStatusEnum } from "@/shared/enum/notificationStatus.enum copy";
+import { NotificationStatusEnum } from "@/shared/enum/notificationStatus.enum";
 import { BaseEntity } from "@/shared/helpers/baseEntity";
 import { UserEntity } from "@/user/entity/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
