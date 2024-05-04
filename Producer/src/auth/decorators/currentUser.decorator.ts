@@ -1,4 +1,4 @@
-import { UserDto } from "@/baseAuth/user/dto/user.dto";
+import { UserDto } from "@/user/dto/user.dto";
 import { createParamDecorator, ExecutionContext } from "@nestjs/common";
 
 export const CurrentUser = createParamDecorator((field: keyof UserDto, ctx: ExecutionContext) => {
