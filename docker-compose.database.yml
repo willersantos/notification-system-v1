@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:14.4-alpine
+    volumes:
+      - postgres:/data/postgres
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "5435:5432"
+    env_file:
+      - .database.env
+    networks:
+      - notification-system
+    restart: unless-stopped
+
+networks:
+  notification-system:
+    driver: bridge
+
+volumes:
+  postgres:
+    driver: local

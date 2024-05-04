@@ -17,7 +17,12 @@ export class UserEntity extends BaseEntity {
     @Column({ name: "fullname", type: "char", length: 255 })
     fullname: string;
 
-    @Column({ name: "notification_type_opt_out", type: "array", array: true })
+    @Column("enum", {
+        name: "notification_type_opt_out",
+        enum: NotificationTypeOptOutEnum,
+        enumName: "notificationTypeOptOutEnum",
+        array: true
+    })
     notificationTypeOptOut: NotificationTypeOptOutEnum[];
 
     @OneToMany(() => NotificationEntity, (notification) => notification.user)

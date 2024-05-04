@@ -1,4 +1,4 @@
-version: "3.2"
+version: "3.8"
 
 services:
   postgres:
@@ -31,22 +31,22 @@ services:
     depends_on:
       - postgres
     restart: unless-stopped
-  notification-consumer:
-    container_name: notification-consumer
-    build:
-      dockerfile: Consumer/Dockerfile
-      context: ./Consumer
-    volumes:
-      - .:/usr/app
-    env_file:
-      - .env.local
-    ports:
-      - 8001:8001
-    networks:
-      - notification-system
-    depends_on:
-      - postgres
-    restart: unless-stopped
+  # notification-consumer:
+  #   container_name: notification-consumer
+  #   build:
+  #     dockerfile: Consumer/Dockerfile
+  #     context: ./Consumer
+  #   volumes:
+  #     - .:/usr/app
+  #   env_file:
+  #     - .env.local
+  #   ports:
+  #     - 8001:8001
+  #   networks:
+  #     - notification-system
+  #   depends_on:
+  #     - postgres
+  #   restart: unless-stopped
 
 networks:
   notification-system:
@@ -55,7 +55,7 @@ networks:
 volumes:
   notification-producer:
     driver: local
-  notification-consumer:
-    driver: local
+  # notification-consumer:
+  #   driver: local
   postgres:
     driver: local
