@@ -20,15 +20,15 @@ export class UserService {
         try {
             this.logger.log(`Start service getByEmailAndUsername - Request - ${JSON.stringify({ email, username })}`);
 
-            const { emails, usernames, ids } = await this.getAllEmailsAndUsernames();
+            const { emails, usernames } = await this.getAllEmailsAndUsernames();
 
             if (emails.includes(email.toLowerCase()) && (await this.matchUsername(username, usernames))) {
                 const user = await this.repository.findByEmail(email);
 
                 const response = {
-                    id: ids[emails.indexOf(email)],
+                    id: user.id,
                     email,
-                    username: user?.fullname
+                    username: user.fullname
                 };
                 this.logger.log(`End service getByEmailAndUsername - Response ${JSON.stringify(response)}`);
 
@@ -67,11 +67,10 @@ export class UserService {
             const emailsAndNames = await this.repository.findEmailAndUsername();
             const emails = emailsAndNames.map(({ email }) => email.toLowerCase());
             const usernames = emailsAndNames.map(({ fullname }) => fullname.toLowerCase());
-            const ids = emailsAndNames.map(({ id }) => id);
             this.logger.log(
                 `End service getAllEmailsAndUsernames - Response - ${JSON.stringify({ emails, usernames })}`
             );
-            return { emails, usernames, ids };
+            return { emails, usernames };
         } catch (error) {
             this.logger.error(`Error service getAllEmailsAndUsernames - Error - ${JSON.stringify(error)}`);
             throw HandleHttpError.return(error);

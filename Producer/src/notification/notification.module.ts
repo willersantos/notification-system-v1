@@ -4,7 +4,6 @@ import { DataSource } from "typeorm";
 import { NotificationEntity } from "./entity/notifcation.entity";
 import { NotificationRepository } from "./notification.repository";
 import { NotificationService } from "./notification.service";
-import { NotificationController } from "./notification.controller";
 
 @Module({
     imports: [TypeOrmModule.forFeature([NotificationEntity])],
@@ -18,7 +17,6 @@ import { NotificationController } from "./notification.controller";
         },
         NotificationService
     ],
-    exports: [NotificationService],
-    controllers: [NotificationController]
+    exports: [NotificationService]
 })
 export class NotificationModule {}

@@ -18,7 +18,6 @@ export const UserRepository: Pick<IUserRepository, "findById" | "findByEmail" | 
         return await this.findOneBy({ email });
     },
     async findEmailAndUsername(this: Repository<UserEntity>): Promise<UserMinifyDto[]> {
-        const user = new UserMinifyDto();
-        return await this.createQueryBuilder().where({ isActive: true }).select(Object.keys(user)).execute();
+        return await this.createQueryBuilder().where({ isActive: true }).select(["fullname", "email"]).execute();
     }
 };
