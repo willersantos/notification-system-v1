@@ -18,7 +18,7 @@ services:
   notification-producer:
     container_name: notification-producer
     build:
-      dockerfile: Producer/Dockerfile
+      dockerfile: Dockerfile
       context: ./Producer
     volumes:
       - .:/usr/app
@@ -31,22 +31,22 @@ services:
     depends_on:
       - postgres
     restart: unless-stopped
-  # notification-consumer:
-  #   container_name: notification-consumer
-  #   build:
-  #     dockerfile: Consumer/Dockerfile
-  #     context: ./Consumer
-  #   volumes:
-  #     - .:/usr/app
-  #   env_file:
-  #     - ./Consumer/.env
-  #   ports:
-  #     - 8001:8001
-  #   networks:
-  #     - notification-system
-  #   depends_on:
-  #     - postgres
-  #   restart: unless-stopped
+  notification-consumer:
+    container_name: notification-consumer
+    build:
+      dockerfile: Dockerfile
+      context: ./Consumer
+    volumes:
+      - .:/usr/app
+    env_file:
+      - ./Consumer/.env
+    ports:
+      - 8001:8001
+    networks:
+      - notification-system
+    depends_on:
+      - postgres
+    restart: unless-stopped
   rabbitmq:
     image: rabbitmq:3.8.16-management
     container_name: rabbitmq
@@ -93,8 +93,8 @@ networks:
 volumes:
   notification-producer:
     driver: local
-  # notification-consumer:
-  #   driver: local
+  notification-consumer:
+    driver: local
   rabbitmq:
     driver: local
   grafana:
