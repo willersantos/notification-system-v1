@@ -1,3 +1,4 @@
+import { ProducerService } from "@/producer/producer.service";
 import { HandleHttpError } from "@/shared/helpers/utils/handleError";
 import { HttpException, HttpStatus, Injectable, Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -13,7 +14,8 @@ export class UserService {
 
     constructor(
         @InjectRepository(UserEntity)
-        private readonly repository: IUserRepository
+        private readonly repository: IUserRepository,
+        private readonly producerService: ProducerService
     ) {}
 
     public async getByEmailAndUsername(email: string, username: string): Promise<UserDto | null> {
@@ -52,7 +54,7 @@ export class UserService {
                 throw new HttpException("User not found by id", HttpStatus.NOT_FOUND);
             }
 
-            // Envia para módulo de producer para enviar mensagens
+            await this.producerService.sendMessage(message, id);
 
             this.logger.log(`End service saveMessage`);
         } catch (error) {

@@ -1,3 +1,4 @@
+import { ProducerModule } from "@/producer/producer.module";
 import { Module } from "@nestjs/common";
 import { TypeOrmModule, getDataSourceToken, getRepositoryToken } from "@nestjs/typeorm";
 import { DataSource } from "typeorm";
@@ -7,7 +8,7 @@ import { UserRepository } from "./user.repository";
 import { UserService } from "./user.service";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UserEntity])],
+    imports: [TypeOrmModule.forFeature([UserEntity]), ProducerModule],
     controllers: [UserController],
     providers: [
         {
