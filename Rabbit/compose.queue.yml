@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.8.16-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "15692:15692"
+    env_file:
+      - .rabbit.env
+    networks:
+      - notification-system
+    restart: unless-stopped
+    
+
+networks:
+  notification-system:
+    driver: bridge
+
+volumes:
+  rabbitmq:
+    driver: local
