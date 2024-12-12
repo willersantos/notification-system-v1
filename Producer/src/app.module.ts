@@ -8,6 +8,7 @@ import "dotenv/config";
 import { resolve } from "path";
 import { AuthModule } from "./auth/auth.module";
 import { NotificationModule } from "./notification/notification.module";
+import { ProducerModule } from "./producer/producer.module";
 import appConfig from "./shared/config/app.config";
 import authConfig from "./shared/config/auth.config";
 import urlConfig from "./shared/config/url.config";
@@ -16,7 +17,7 @@ import { TokenModule } from "./token/token.module";
 import { UserModule } from "./user/user.module";
 config({ path: resolve(__dirname, `../.env.${process.env.NODE_ENV}`) });
 
-const InternModules = [AuthModule, NotificationModule, TokenModule, UserModule];
+const InternModules = [AuthModule, NotificationModule, ProducerModule, TokenModule, UserModule];
 
 @Module({
     imports: [

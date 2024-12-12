@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+    notification-producer:
+        container_name: notification-producer
+        build:
+            dockerfile: Dockerfile
+            context: .
+        volumes:
+            - .:/usr/app
+        env_file:
+            - .env
+        ports:
+            - 8000:8000
+        networks:
+            - notification-system
+        restart: unless-stopped
+
+networks:
+    notification-system:
+        driver: bridge
+
+volumes:
+    notification-producer:
+        driver: local
